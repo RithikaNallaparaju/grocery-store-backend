@@ -1,13 +1,12 @@
-import datetime
 import mysql.connector
-
-__cnx = None
+import os
 
 def get_sql_connection():
-  print("Opening mysql connection")
-  global __cnx
-
-  if __cnx is None:
-    __cnx = mysql.connector.connect(user='root', password='rithika@123', database='grocery_store')
-
-  return __cnx
+    connection = mysql.connector.connect(
+        host=os.environ.get('MYSQLHOST'),
+        user=os.environ.get('MYSQLUSER'),
+        password=os.environ.get('MYSQLPASSWORD'),
+        database=os.environ.get('MYSQLDATABASE'),
+        port=int(os.environ.get('MYSQLPORT', 3306))  # default to 3306 if not set
+    )
+    return connection
